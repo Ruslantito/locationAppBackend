@@ -7,7 +7,7 @@ class routeFinder {
     routeFinder.test = 'test';
 
     routeFinder.searchPointB = function(route, name, result) {
-      console.log('Searching in ' + name);
+      //console.log('Searching in ' + name);
       routeFinder.passed.push(name);
       route.forEach(function(point) {
         if (point == routeFinder.pointB) {
@@ -38,7 +38,7 @@ class routeFinder {
             stops.push(stop.name);
           });
           routeFinder.routes.set(route.name, stops);
-          console.log(route.name, stops);
+          //console.log(route.name, stops);
         });
       });
     });  
@@ -52,12 +52,12 @@ class routeFinder {
     const db = require("./db.js");
     db.query('SELECT name, SQRT(POW(coord_x - ' + coordX1 + ', 2) + POW(coord_y - '  + coordY1 + ', 2)) as distance FROM stops ORDER BY distance LIMIT 1', function(dbError, dbResponse) {
       routeFinder.pointA = dbResponse[0].name;      
-      console.log(routeFinder.pointA);
+      //console.log(routeFinder.pointA);
     });
 
     db.query('SELECT name, SQRT(POW(coord_x - ' + coordX2 + ', 2) + POW(coord_y - '  + coordY2 + ', 2)) as distance FROM stops ORDER BY distance LIMIT 1', function(dbError, dbResponse) {
       routeFinder.pointB = dbResponse[0].name;      
-      console.log(routeFinder.pointB);
+      //console.log(routeFinder.pointB);
     });
   }
 
