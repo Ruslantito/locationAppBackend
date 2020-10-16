@@ -267,6 +267,7 @@ app.get(["/transportTypes"], async (req, res) => {
 });
 
 
+//==  Mapathon SCRIPTS == START ==
 app.get(["/teams"], async (req, res) => {
   try {
     res.send({
@@ -278,17 +279,16 @@ app.get(["/teams"], async (req, res) => {
     });
   }
 });
-//==>
 
-//==  Mapathon SCRIPTS == START ==
-app.get(["/addStopNew/:stop_name/:stop_coordX/:stop_coordY/:teamName"], async (req, res) => {
+
+app.get(["/addStopNew/:stop_name/:stop_coordX/:stop_coordY/:teamId"], async (req, res) => {
   const stop_name = req.params.stop_name;
   const stop_coordX = req.params.stop_coordX;
   const stop_coordY = req.params.stop_coordY;
-  const teamName = req.params.teamName;
+  const teamId = req.params.teamId;
   try {
     res.send({
-      response: await db.query(`INSERT INTO stops(name,coord_x,coord_y,teamName) VALUES("` + stop_name + `",` + stop_coordX + `,` + stop_coordY + `,"` + teamName + `")`)
+      response: await db.query(`INSERT INTO stops(name,coord_x,coord_y,teamId) VALUES("` + stop_name + `",` + stop_coordX + `,` + stop_coordY + `,` + teamId + `)`)
     });
   } catch (err) {
     res.status(500).json({
@@ -298,14 +298,12 @@ app.get(["/addStopNew/:stop_name/:stop_coordX/:stop_coordY/:teamName"], async (r
 });
 
 
-app.get(["/addStopNew/:stop_name/:stop_coordX/:stop_coordY/:teamName"], async (req, res) => {
-  const stop_name = req.params.stop_name;
-  const stop_coordX = req.params.stop_coordX;
-  const stop_coordY = req.params.stop_coordY;
-  const teamName = req.params.teamName;
+
+app.get(["/logs/:teamId"], async (req, res) => {
+  const teamId = req.params.teamId;
   try {
-    res.send({
-      response: await db.query(`INSERT INTO stops(name,coord_x,coord_y,teamName) VALUES("` + stop_name + `",` + stop_coordX + `,` + stop_coordY + `,"` + teamName + `")`)
+    res.send({    
+      response: await db.query('SELECT * FROM stops WHERE teamId = ' + teamId )
     });
   } catch (err) {
     res.status(500).json({
@@ -313,4 +311,19 @@ app.get(["/addStopNew/:stop_name/:stop_coordX/:stop_coordY/:teamName"], async (r
     });
   }
 });
+
+
+app.get(["/routesNew/:teamId_hasAccess"], async (req, res) => {
+  const teamId_hasAccess = req.params.teamId_hasAccess;
+  try {
+    res.send({
+      response: await db.query('SELECT * FROM routes WHERE teamId_hasAccess = ' + teamId_hasAccess)
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    });
+  }
+});
+
 //==  Mapathon SCRIPTS == FINISH ==
