@@ -146,7 +146,7 @@ app.get(["/addRouteStop/:route_id/:stop_id"], async (req, res) => {
   const stop_id = req.params.stop_id;
   try {
     res.send({
-      response: await db.query(`INSERT INTO routes_stops(route_id,stop_id) VALUES("` + route_id + `",` + stop_id + `)`)
+      response: await db.query(`INSERT INTO routes_stops(route_id,stop_id) VALUES(` + route_id + `,` + stop_id + `)`)
     });
   } catch (err) {
     res.status(500).json({
